@@ -3,6 +3,7 @@
     <img alt="Vue logo" src="../assets/logo.png" />
     <h1 v-if="loading">Loading!...</h1>
     <img v-if="loader" :src="res[0].url" />
+    <modal />
     <h1>X:{{ x }} Y:{{ y }}</h1>
     <h1>Title: {{ greetings }}</h1>
     <h1>{{ cnt }}</h1>
@@ -32,6 +33,7 @@ import {
 
 import useMousePos from "@/hooks/useMousePos";
 import useUrlLoader from "@/hooks/useUrlLoader";
+import Modal from "@/components/Modal.vue";
 interface Dataprops {
   cnt: number;
   double: number;
@@ -98,6 +100,9 @@ export default defineComponent({
       loading,
       loader
     };
+  },
+  components: {
+    Modal
   }
 });
 </script>
