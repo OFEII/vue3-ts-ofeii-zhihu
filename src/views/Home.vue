@@ -1,4 +1,12 @@
 <template>
+  <Suspense>
+    <template #default>
+      <async-show />
+    </template>
+    <template #fallback>
+      <h1>susupense-laoding!!!</h1>
+    </template>
+  </Suspense>
   <div class="home">
     <img alt="Vue logo" src="../assets/logo.png" />
     <h1 v-if="loading">Loading!...</h1>
@@ -35,6 +43,7 @@ import {
 import useMousePos from "@/hooks/useMousePos";
 import useUrlLoader from "@/hooks/useUrlLoader";
 import Modal from "@/components/Modal.vue";
+import AsyncShow from "@/components/AsyncShow.vue";
 interface Dataprops {
   cnt: number;
   double: number;
@@ -113,7 +122,8 @@ export default defineComponent({
     };
   },
   components: {
-    Modal
+    Modal,
+    AsyncShow
   }
 });
 </script>
