@@ -1,7 +1,10 @@
 <template>
   <Suspense>
     <template #default>
-      <async-show />
+      <div>
+        <async-show />
+        <dog-show />
+      </div>
     </template>
     <template #fallback>
       <h1>susupense-laoding!!!</h1>
@@ -29,21 +32,13 @@
 </template>
 
 <script lang="ts">
-import {
-  computed,
-  defineComponent,
-  reactive,
-  ref,
-  toRefs,
-  watch,
-  onMounted,
-  onUnmounted
-} from "vue";
+import { computed, defineComponent, reactive, ref, toRefs, watch } from "vue";
 
 import useMousePos from "@/hooks/useMousePos";
 import useUrlLoader from "@/hooks/useUrlLoader";
 import Modal from "@/components/Modal.vue";
 import AsyncShow from "@/components/AsyncShow.vue";
+import DogShow from "@/components/DogShow.vue";
 interface Dataprops {
   cnt: number;
   double: number;
@@ -123,7 +118,8 @@ export default defineComponent({
   },
   components: {
     Modal,
-    AsyncShow
+    AsyncShow,
+    DogShow
   }
 });
 </script>
