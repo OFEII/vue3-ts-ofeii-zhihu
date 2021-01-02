@@ -2,7 +2,7 @@
   <div class="home">
     <img alt="Vue logo" src="../assets/logo.png" />
     <h1 v-if="loading">Loading!...</h1>
-    <img v-if="loader" :src="res.message" >
+    <img v-if="loader" :src="res[0].url" />
     <h1>X:{{ x }} Y:{{ y }}</h1>
     <h1>Title: {{ greetings }}</h1>
     <h1>{{ cnt }}</h1>
@@ -31,13 +31,24 @@ import {
 } from "vue";
 
 import useMousePos from "@/hooks/useMousePos";
-import useUrlLoader from '@/hooks/useUrlLoader'
+import useUrlLoader from "@/hooks/useUrlLoader";
 interface Dataprops {
   cnt: number;
   double: number;
   increase: () => void;
   numberArr: number[];
   person: { name?: string };
+}
+interface DogRes {
+  message: string;
+  status: string;
+}
+
+interface CatRes {
+  id: string;
+  url: string;
+  width: number;
+  height: number;
 }
 export default defineComponent({
   name: "Home",
@@ -55,7 +66,12 @@ export default defineComponent({
     data.numberArr[0] = 5;
     data.person.name = "ofeii";
     // useUrlLoader
-    const { res, loading, loader } = useUrlLoader('https://dog.ceo/api/breeds/image/random')
+    const { res, loading, loader } = useUrlLoader<CatRes[]>(
+      "https://api.thecatapi.com/v1/images/search?limit=1"
+    );
+    // const { res, loading, loader } = useUrlLoader<DogRes[]>(
+    //   "https://dog.ceo/api/breeds/image/random"
+    // );
     // useMousePos
     const { x, y } = useMousePos();
     // watch test
@@ -63,7 +79,10 @@ export default defineComponent({
     const updateGreeting = () => {
       greetings.value += "OFEII!";
     };
-    watch([greetings, () => data.cnt], (newVal, oldVal) => {
+    watch([greetings, () => data.cnt, res], (newVal, oldVal) => {
+      if (res.value) {
+        console.log("value", res.value[0].url);
+      }
       console.log("new", newVal);
       console.log("old", oldVal);
       document.title = `updated ${greetings.value}`;

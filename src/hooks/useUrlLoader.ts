@@ -2,8 +2,8 @@ import {ref} from 'vue'
 import axios from 'axios'
 // 添加一个参数作为要使用的地址
 
-const useUrlLoader = (url: string) => {
-  const res = ref(null)
+function useUrlLoader<T>(url: string){
+  const res = ref<T | null>(null)
   const loading = ref(true)
   const loader = ref(false)
   const err = ref(null)
