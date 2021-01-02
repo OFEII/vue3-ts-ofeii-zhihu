@@ -13,24 +13,24 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
+import { defineComponent } from 'vue'
 export default defineComponent({
-  name: "modal",
+  name: 'modal',
   props: {
     isOpen: Boolean
   },
   emits: {
-    "close-modal": null
+    'close-modal': null
   },
-  setup(props, context) {
+  setup (props, context) {
     const buttonClick = () => {
-      context.emit("close-modal");
-    };
+      context.emit('close-modal')
+    }
     return {
       buttonClick
-    };
+    }
   }
-});
+})
 </script>
 <style>
 #center {

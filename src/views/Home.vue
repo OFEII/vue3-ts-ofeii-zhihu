@@ -32,13 +32,14 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, reactive, ref, toRefs, watch } from "vue";
+import { computed, defineComponent, reactive, ref, toRefs, watch } from 'vue'
 
-import useMousePos from "@/hooks/useMousePos";
-import useUrlLoader from "@/hooks/useUrlLoader";
-import Modal from "@/components/Modal.vue";
-import AsyncShow from "@/components/AsyncShow.vue";
-import DogShow from "@/components/DogShow.vue";
+import useMousePos from '@/hooks/useMousePos'
+import useUrlLoader from '@/hooks/useUrlLoader'
+import Modal from '@/components/Modal.vue'
+import AsyncShow from '@/components/AsyncShow.vue'
+import DogShow from '@/components/DogShow.vue'
+const a = '12'
 interface Dataprops {
   cnt: number;
   double: number;
@@ -58,50 +59,50 @@ interface CatRes {
   height: number;
 }
 export default defineComponent({
-  name: "Home",
-  setup() {
+  name: 'Home',
+  setup () {
     // 2.base Reactive 函数
     const data: Dataprops = reactive({
       cnt: 0,
       increase: () => {
-        data.cnt++;
+        data.cnt++
       },
       double: computed(() => data.cnt * 2),
       numberArr: [0, 1, 2],
       person: {}
-    });
-    data.numberArr[0] = 5;
-    data.person.name = "ofeii";
+    })
+    data.numberArr[0] = 5
+    data.person.name = 'ofeii'
     // useUrlLoader
     const { res, loading, loader } = useUrlLoader<CatRes[]>(
-      "https://api.thecatapi.com/v1/images/search?limit=1"
-    );
+      'https://api.thecatapi.com/v1/images/search?limit=1'
+    )
     // const { res, loading, loader } = useUrlLoader<DogRes[]>(
     //   "https://dog.ceo/api/breeds/image/random"
     // );
     // useMousePos
-    const { x, y } = useMousePos();
+    const { x, y } = useMousePos()
     // watch test
-    const greetings = ref("");
+    const greetings = ref('')
     const updateGreeting = () => {
-      greetings.value += "OFEII!";
-    };
+      greetings.value += 'OFEII!'
+    }
     watch([greetings, () => data.cnt, res], (newVal, oldVal) => {
       if (res.value) {
-        console.log("value", res.value[0].url);
+        console.log('value', res.value[0].url)
       }
-      console.log("new", newVal);
-      console.log("old", oldVal);
-      document.title = `updated ${greetings.value}`;
-    });
-    const refData = toRefs(data);
-    const modalIsOpen = ref(false);
+      console.log('new', newVal)
+      console.log('old', oldVal)
+      document.title = `updated ${greetings.value}`
+    })
+    const refData = toRefs(data)
+    const modalIsOpen = ref(false)
     const openModal = () => {
-      modalIsOpen.value = true;
-    };
+      modalIsOpen.value = true
+    }
     const onModalClose = () => {
-      modalIsOpen.value = false;
-    };
+      modalIsOpen.value = false
+    }
     return {
       ...refData,
       greetings,
@@ -114,12 +115,12 @@ export default defineComponent({
       openModal,
       onModalClose,
       modalIsOpen
-    };
+    }
   },
   components: {
     Modal,
     AsyncShow,
     DogShow
   }
-});
+})
 </script>

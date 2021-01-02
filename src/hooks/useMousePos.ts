@@ -7,28 +7,28 @@ import {
   watch,
   onMounted,
   onUnmounted
-} from "vue"
+} from 'vue'
 
 interface MousePos {
-  x: number
-  y: number
+  x: number;
+  y: number;
 }
 
-function useMousePos() {
+function useMousePos () {
   // mouse trace model-reactive
   const mouseData: MousePos = reactive({
     x: 0,
     y: 0
   })
   const updateMouse = (e: MouseEvent) => {
-    mouseData.x = e.pageX;
-    mouseData.y = e.pageY;
-  };
+    mouseData.x = e.pageX
+    mouseData.y = e.pageY
+  }
   onMounted(() => {
-    document.addEventListener("click", updateMouse)
-  });
+    document.addEventListener('click', updateMouse)
+  })
   onUnmounted(() => {
-    document.removeEventListener("click", updateMouse)
+    document.removeEventListener('click', updateMouse)
   })
   const mouseRefData = toRefs(mouseData)
   return {
