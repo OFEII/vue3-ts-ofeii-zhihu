@@ -2,8 +2,9 @@
   <div class="home">
     <img alt="Vue logo" src="../assets/logo.png" />
     <h1 v-if="loading">Loading!...</h1>
-    <img v-if="loader" :src="res[0].url" />
-    <modal />
+    <!-- <img v-if="loader" :src="res[0].url" /> -->
+    <modal :isOpen="modalIsOpen" @close-modal="onModalClose" />
+    <button @click="openModal">🤡</button>
     <h1>X:{{ x }} Y:{{ y }}</h1>
     <h1>Title: {{ greetings }}</h1>
     <h1>{{ cnt }}</h1>
@@ -90,6 +91,13 @@ export default defineComponent({
       document.title = `updated ${greetings.value}`;
     });
     const refData = toRefs(data);
+    const modalIsOpen = ref(false);
+    const openModal = () => {
+      modalIsOpen.value = true;
+    };
+    const onModalClose = () => {
+      modalIsOpen.value = false;
+    };
     return {
       ...refData,
       greetings,
@@ -98,7 +106,10 @@ export default defineComponent({
       y,
       res,
       loading,
-      loader
+      loader,
+      openModal,
+      onModalClose,
+      modalIsOpen
     };
   },
   components: {

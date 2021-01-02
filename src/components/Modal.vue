@@ -1,14 +1,36 @@
 <template>
   <teleport to="#modal">
-    <div id="center">
+    <div id="center" v-if="isOpen">
+      <h2>
+        <slot>
+          this is a modal
+        </slot>
+      </h2>
+      <button @click="buttonClick">Close</button>
       <h1>this is a modal</h1>
     </div>
   </teleport>
 </template>
-<script>
-export default {
-  name: "modal"
-};
+
+<script lang="ts">
+import { defineComponent } from "vue";
+export default defineComponent({
+  name: "modal",
+  props: {
+    isOpen: Boolean
+  },
+  emits: {
+    "close-modal": null
+  },
+  setup(props, context) {
+    const buttonClick = () => {
+      context.emit("close-modal");
+    };
+    return {
+      buttonClick
+    };
+  }
+});
 </script>
 <style>
 #center {
