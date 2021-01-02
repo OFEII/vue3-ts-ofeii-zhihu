@@ -1,6 +1,8 @@
 <template>
   <div class="home">
     <img alt="Vue logo" src="../assets/logo.png" />
+    <h1 v-if="loading">Loading!...</h1>
+    <img v-if="loader" :src="res.message" >
     <h1>X:{{ x }} Y:{{ y }}</h1>
     <h1>Title: {{ greetings }}</h1>
     <h1>{{ cnt }}</h1>
@@ -29,6 +31,7 @@ import {
 } from "vue";
 
 import useMousePos from "@/hooks/useMousePos";
+import useUrlLoader from '@/hooks/useUrlLoader'
 interface Dataprops {
   cnt: number;
   double: number;
@@ -51,6 +54,8 @@ export default defineComponent({
     });
     data.numberArr[0] = 5;
     data.person.name = "ofeii";
+    // useUrlLoader
+    const { res, loading, loader } = useUrlLoader('https://dog.ceo/api/breeds/image/random')
     // useMousePos
     const { x, y } = useMousePos();
     // watch test
@@ -69,7 +74,10 @@ export default defineComponent({
       greetings,
       updateGreeting,
       x,
-      y
+      y,
+      res,
+      loading,
+      loader
     };
   }
 });
