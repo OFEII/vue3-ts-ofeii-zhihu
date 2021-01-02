@@ -3,6 +3,12 @@
     <img alt="Vue logo" src="../assets/logo.png" />
     <h1>{{ cnt }}</h1>
     <h1>{{ double }}</h1>
+    <ul>
+      <li v-for="n in numberArr" :key="n">
+        <h1>{{ n }}</h1>
+      </li>
+      <h1>{{ person.name }}</h1>
+    </ul>
     <button @click="increase">🤙+1</button>
   </div>
 </template>
@@ -13,18 +19,24 @@ interface Dataprops {
   cnt: number;
   double: number;
   increase: () => void;
+  numberArr: number[];
+  person: { name?: string };
 }
 export default defineComponent({
   name: "Home",
   setup() {
-    // 2.base Reactive 函数 
+    // 2.base Reactive 函数
     const data: Dataprops = reactive({
       cnt: 0,
       increase: () => {
         data.cnt++;
       },
-      double: computed(() => data.cnt * 2)
+      double: computed(() => data.cnt * 2),
+      numberArr: [0, 1, 2],
+      person: {}
     });
+    data.numberArr[0] = 5;
+    data.person.name = "ofeii";
     const refData = toRefs(data);
     return {
       ...refData
