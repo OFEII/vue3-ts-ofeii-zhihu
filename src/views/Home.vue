@@ -1,6 +1,7 @@
 <template>
   <div class="home">
     <img alt="Vue logo" src="../assets/logo.png" />
+    <h1>Title: {{ greetings }}</h1>
     <h1>{{ cnt }}</h1>
     <h1>{{ double }}</h1>
     <ul>
@@ -10,11 +11,12 @@
       <h1>{{ person.name }}</h1>
     </ul>
     <button @click="increase">🤙+1</button>
+    <button @click="updateGreeting">✍update title</button>
   </div>
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, reactive, ref, toRefs } from "vue";
+import { computed, defineComponent, reactive, ref, toRefs, watch } from "vue";
 interface Dataprops {
   cnt: number;
   double: number;
@@ -37,9 +39,21 @@ export default defineComponent({
     });
     data.numberArr[0] = 5;
     data.person.name = "ofeii";
+    // watch test
+    const greetings = ref("");
+    const updateGreeting = () => {
+      greetings.value += "OFEII!";
+    };
+    watch([greetings, () => data.cnt], (newVal, oldVal) => {
+      console.log("new", newVal);
+      console.log("old", oldVal);
+      document.title = `updated ${greetings.value}`;
+    });
     const refData = toRefs(data);
     return {
-      ...refData
+      ...refData,
+      greetings,
+      updateGreeting
     };
     // 1：base ref syntax
     // const cnt = ref(0);
