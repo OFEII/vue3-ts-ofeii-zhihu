@@ -1,6 +1,7 @@
 <template>
   <div class="home">
     <img alt="Vue logo" src="../assets/logo.png" />
+    <h1>X:{{ x }} Y:{{ y }}</h1>
     <h1>Title: {{ greetings }}</h1>
     <h1>{{ cnt }}</h1>
     <h1>{{ double }}</h1>
@@ -16,7 +17,18 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, reactive, ref, toRefs, watch } from "vue";
+import {
+  computed,
+  defineComponent,
+  reactive,
+  ref,
+  toRefs,
+  watch,
+  onMounted,
+  onUnmounted
+} from "vue";
+
+import useMousePos from "@/hooks/useMousePos";
 interface Dataprops {
   cnt: number;
   double: number;
@@ -39,6 +51,8 @@ export default defineComponent({
     });
     data.numberArr[0] = 5;
     data.person.name = "ofeii";
+    // useMousePos
+    const { x, y } = useMousePos();
     // watch test
     const greetings = ref("");
     const updateGreeting = () => {
@@ -53,21 +67,10 @@ export default defineComponent({
     return {
       ...refData,
       greetings,
-      updateGreeting
+      updateGreeting,
+      x,
+      y
     };
-    // 1：base ref syntax
-    // const cnt = ref(0);
-    // const double = computed(() => {
-    //   return cnt.value * 2;
-    // });
-    // const increase = () => {
-    //   cnt.value++;
-    // };
-    // return {
-    //   cnt,
-    //   increase,
-    //   double
-    // };
   }
 });
 </script>
