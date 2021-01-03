@@ -1,16 +1,20 @@
 <template>
-  <ul>
-    <li v-for="col in list" :key="col.id">
-      <img :src="col.avatar" alt="col.title">
-      <h5>{{ col.title }}</h5>
-      <p>{{ col.description }}</p>
-      <a href="#">进入专栏</a>
-    </li>
-  </ul>
+  <div class="row">
+    <div v-for="col in columnList" :key="col.id" class="col-4">
+      <div class="card h-100 shadow-sm">
+        <div class="card-body text-center">
+          <img :src="col.avatar" :alt="col.title" class="rounded-circle border border-light w-25 my-3">
+          <h5 class="card-title">{{ col.title }}</h5>
+          <p class="card-text text-left">{{ col.description }}</p>
+          <a href="#" class="btn btn-outline-primary">进入专栏</a>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType } from 'vue'
+import { computed, defineComponent, PropType } from 'vue'
 export interface ColumnProps {
   id: number;
   title: string;
@@ -25,6 +29,19 @@ export default defineComponent({
       // 因为 Array 是一个数组的构造函数不是类型，我们可以使用 PropType 这个方法，它接受一个泛型，讲 Array 构造函数返回传入的泛型类型。
       type: Array as PropType<ColumnProps[]>,
       required: true
+    }
+  },
+  setup (props) {
+    const columnList = computed(() => {
+      return props.list.map(column => {
+        if (!column.avatar) {
+          column.avatar = require('@/assets/column.jpg')
+        }
+        return column
+      })
+    })
+    return {
+      columnList
     }
   }
 })
