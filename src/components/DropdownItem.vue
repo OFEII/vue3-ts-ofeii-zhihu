@@ -20,7 +20,7 @@ export default defineComponent({
 })
 </script>
 
-<style lang="scss" scoped>
+<style>
 .dropdown-option.is-disabled * {
   color: #6c757d;
   pointer-events: none;
