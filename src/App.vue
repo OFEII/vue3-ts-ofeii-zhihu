@@ -1,7 +1,7 @@
 <template>
   <global-header :user="currentUser"></global-header>
   <div class="container">
-    <form action="">
+    <validate-form @form-submit="onFormSumbit">
       <div class="mb-3">
         <label class="form-label">邮箱地址</label>
         <validate-input
@@ -20,20 +20,10 @@
           placeholder="请输入密码">
         </validate-input>
       </div>
-      <div class="mb-3">
-        <label for="exampleInputEmail1" class="form-label">邮箱地址</label>
-        <input
-          type="text" class="form-control" id="exampleInputEmail1"
-          v-model="emailRef.val"
-          @blur="validateEmail"
-        >
-        <div class="form-text" v-if="emailRef.error">{{emailRef.message}}</div>
-      </div>
-      <div class="mb-3">
-        <label for="exampleInputPassword1" class="form-label">密码</label>
-        <input type="password" class="form-control" id="exampleInputPassword1">
-      </div>
-    </form>
+      <template #submit>
+        <span class="btn btn-danger">Submit</span>
+      </template>
+    </validate-form>
     <column-list :list="list"></column-list>
   </div>
 </template>
@@ -44,6 +34,7 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import ColumnList, { ColumnProps } from './components/ColumnList.vue'
 import GlobalHeader, { UserPorps } from './components/GlobalHeader.vue'
 import ValidateInput, { RulesProp } from './components/ValidateInput.vue'
+import ValidateForm from './components/ValidateForm.vue'
 const emailReg = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
 const currentUser: UserPorps = {
   isLogin: true,
@@ -87,6 +78,9 @@ export default defineComponent({
     const passwordRules: RulesProp = [
       { type: 'required', message: '密码不能为空' }
     ]
+    const onFormSumbit = (result: boolean) => {
+      console.log('1234', result)
+    }
     const emailRef = reactive({
       val: '',
       error: false,
@@ -109,13 +103,15 @@ export default defineComponent({
       emailRules,
       passwordRules,
       emailVal,
-      passwordVal
+      passwordVal,
+      onFormSumbit
     }
   },
   components: {
     ColumnList,
     GlobalHeader,
-    ValidateInput
+    ValidateInput,
+    ValidateForm
   }
 })
 </script>
