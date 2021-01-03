@@ -4,18 +4,16 @@
       {{title}}
     </a>
     <ul class="dropdown-menu" :style="{display: 'block'}" v-if="isOpen">
-      <li class="dropdown-item">
-        <a href="#">新建文章</a>
-      </li>
-      <li class="dropdown-item">
-        <a href="#">编辑资料</a>
-      </li>
+      <dropdown-item><a href="#" class="dropdown-item">新建文章</a></dropdown-item>
+      <dropdown-item :disabled="true"><a href="#" class="dropdown-item">编辑资料</a></dropdown-item>
+      <dropdown-item><a href="#" class="dropdown-item">退出登陆</a></dropdown-item>
     </ul>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent, ref } from 'vue'
+import DropdownItem from './DropdownItem.vue'
 export default defineComponent({
   name: 'Dropdown',
   props: {
@@ -33,13 +31,16 @@ export default defineComponent({
       isOpen,
       toggleOpen
     }
+  },
+  components: {
+    DropdownItem
   }
 })
 </script>
 
 <style lang="scss" scoped>
 .dropdown-menu{
-  li{
+  .dropdown-item{
     a{
       color: #0D6EFD;
       text-decoration: none;
