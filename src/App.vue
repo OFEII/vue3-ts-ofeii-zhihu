@@ -69,8 +69,9 @@ const testData: ColumnProps[] = [
 export default defineComponent({
   name: 'App',
   setup (props) {
-    const emailVal = ref('')
-    const passwordVal = ref('')
+    // const inputRef = ref<any>()
+    const emailVal = ref('123@test.com')
+    const passwordVal = ref('123')
     const emailRules: RulesProp = [
       { type: 'required', message: '电子邮箱地址不能为空' },
       { type: 'email', message: '请输入正确的电子邮箱格式' }
@@ -79,7 +80,7 @@ export default defineComponent({
       { type: 'required', message: '密码不能为空' }
     ]
     const onFormSumbit = (result: boolean) => {
-      console.log('1234', result)
+      console.log('res', result)
     }
     const emailRef = reactive({
       val: '',
