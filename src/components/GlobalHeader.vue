@@ -7,7 +7,9 @@
       <li class="list-inline-item"><a href="#" class="btn btn-outline-light my-2">注册</a></li>
     </ul>
     <ul v-else class="list-inline mb-0">
-      <li class="list-inline-item"><a href="#" class="btn btn-outline-light my-2">HELLO? {{user.name}}</a></li>
+      <li class="list-inline-item">
+        <dropdown :title="`hello!😊 ${user.name}`"></dropdown>
+      </li>
     </ul>
   </nav>
   </div>
@@ -15,6 +17,7 @@
 
 <script lang="ts">
 import { defineComponent, PropType } from 'vue'
+import Dropdown from './Dropdown.vue'
 export interface UserPorps {
   isLogin: boolean;
   name?: string;
@@ -27,6 +30,9 @@ export default defineComponent({
       type: Object as PropType<UserPorps>,
       required: true
     }
+  },
+  components: {
+    Dropdown
   }
 })
 </script>
