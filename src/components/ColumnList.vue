@@ -1,12 +1,12 @@
 <template>
   <div class="row">
-    <div v-for="col in columnList" :key="col.id" class="col-4">
+    <div v-for="col in columnList" :key="col._id" class="col-4">
       <div class="card h-100 shadow-sm">
         <div class="card-body text-center">
-          <img :src="col.avatar" :alt="col.title" class="rounded-circle border border-light w-25 my-3">
+          <img :src="col.avatar && col.avatar.fitUrl" :alt="col.title" class="rounded-circle border border-light w-25 my-3">
           <h5 class="card-title">{{ col.title }}</h5>
           <p class="card-text text-left">{{ col.description }}</p>
-          <a href="#" class="btn btn-outline-primary">进入专栏</a>
+          <router-link :to="`/column/${col._id}`" class="btn btn-outline-primary">进入专栏</router-link>
         </div>
       </div>
     </div>
@@ -14,13 +14,9 @@
 </template>
 
 <script lang="ts">
+import { addColumnAvatar } from '@/libs/helper'
+import { ColumnProps } from '@/store/types'
 import { computed, defineComponent, PropType } from 'vue'
-export interface ColumnProps {
-  id: number;
-  title: string;
-  avatar: string;
-  description: string;
-}
 export default defineComponent({
   name: 'ColumnList',
   props: {
@@ -34,9 +30,7 @@ export default defineComponent({
   setup (props) {
     const columnList = computed(() => {
       return props.list.map(column => {
-        if (!column.avatar) {
-          column.avatar = require('@/assets/column.jpg')
-        }
+        addColumnAvatar(column, 50, 50)
         return column
       })
     })
@@ -46,3 +40,10 @@ export default defineComponent({
   }
 })
 </script>
+
+<style lang="scss" scoped>
+.card-body img {
+  width: 50px;
+  height: 50px;
+}
+</style>
